@@ -13,13 +13,13 @@ import org.example.izzy.model.base.BaseEntity;
 import org.example.izzy.model.enums.Roles;
 import org.springframework.security.core.GrantedAuthority;
 
+@Entity
+@Table(name = "roles")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Entity
-@Table(name = "roles")
 public class Role extends BaseEntity implements GrantedAuthority {
     @Enumerated(EnumType.STRING)
     private Roles roleName;

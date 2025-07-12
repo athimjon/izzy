@@ -16,13 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@SuperBuilder
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false)
