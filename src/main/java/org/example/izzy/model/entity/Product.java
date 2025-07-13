@@ -7,6 +7,8 @@ import org.example.izzy.model.base.BaseEntity;
 import org.example.izzy.model.enums.Gender;
 import org.example.izzy.model.enums.ProductStatus;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 @Getter
@@ -30,10 +32,13 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private ProductStatus status = ProductStatus.NEW;
 
-    @Column(columnDefinition = "TEXT" ,nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Category category;
+
+    @OneToMany
+    List<ColourVariant> colourVariants;
 }
