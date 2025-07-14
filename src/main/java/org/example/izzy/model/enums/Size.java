@@ -14,7 +14,7 @@ public enum Size {
     // International Sizes
     INTER_XS("XS"), INTER_S("S"), INTER_M("M"),
     INTER_L("L"), INTER_XL("XL"), INTER_XXL("XXL"),
-    INTER_XXXL("XXXL"), INTER_XXXXL("XXXL"), INTER_XXXXXL("XXXL");
+    INTER_XXXL("XXXL"), INTER_XXXXL("XXXXL"), INTER_XXXXXL("XXXXXL");
 
     private final String value;
 

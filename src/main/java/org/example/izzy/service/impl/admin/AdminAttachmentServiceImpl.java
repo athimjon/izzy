@@ -37,14 +37,14 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
         return attachmentRepository.save(attachment).getId();
     }
 
-    @SneakyThrows
-    @Override
-    public void getFile(Long attachmentId, HttpServletResponse response) {
-        Attachment attachment = attachmentRepository.findById(attachmentId)
-                .orElseThrow(() ->
-                        new RuntimeException("Attachment not found with ID: " + attachmentId));
-
-        byte[] image = s3Service.getImage(attachment.getFileUrl());
-        response.getOutputStream().write(image);
-    }
+//    @SneakyThrows
+//    @Override
+//    public void getFile(Long attachmentId, HttpServletResponse response) {
+//        Attachment attachment = attachmentRepository.findById(attachmentId)
+//                .orElseThrow(() ->
+//                        new RuntimeException("Attachment not found with ID: " + attachmentId));
+//
+//        byte[] image = s3Service.getImage(attachment.getFileUrl());
+//        response.getOutputStream().write(image);
+//    }
 }

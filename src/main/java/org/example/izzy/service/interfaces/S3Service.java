@@ -6,6 +6,6 @@ public interface S3Service {
 
     String uploadImage(MultipartFile file);
 
-    byte[] getImage(String url);
+//    byte[] getImage(String url);
 
 }

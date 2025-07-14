@@ -1,16 +1,12 @@
 package org.example.izzy.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.example.izzy.service.interfaces.S3Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
@@ -47,17 +43,18 @@ public class S3ServiceImpl implements S3Service {
         return key;
     }
 
-    @SneakyThrows
-    @Override
-    public byte[] getImage(String url) {
-        GetObjectRequest request = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(url)
-                .build();
-        try (ResponseInputStream<GetObjectResponse> inputStream = s3Client.getObject(request)) {
-            return inputStream.readAllBytes();
-        }
-    }
+
+//    @SneakyThrows
+//    @Override
+//    public byte[] getImage(String url) {
+//        GetObjectRequest request = GetObjectRequest.builder()
+//                .bucket(bucketName)
+//                .key(url)
+//                .build();
+//        try (ResponseInputStream<GetObjectResponse> inputStream = s3Client.getObject(request)) {
+//            return inputStream.readAllBytes();
+//        }
+//    }
 
 
 }
