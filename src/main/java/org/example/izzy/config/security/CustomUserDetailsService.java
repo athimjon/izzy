@@ -1,11 +1,13 @@
 package org.example.izzy.config.security;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -15,7 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() ->
-                new RuntimeException("User not found with phone number: " + phoneNumber));
+        log.debug("Attempting to load user by phone number: {}", phoneNumber);
+        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> {
+            log.warn("User not found with phone number: {}", phoneNumber);
+            return new UsernameNotFoundException("User not found with phone number: " + phoneNumber);
+        });
     }
 }

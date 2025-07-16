@@ -1,4 +1,4 @@
-package org.example.izzy.model.dto.response;
+package org.example.izzy.model.dto.response.general;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

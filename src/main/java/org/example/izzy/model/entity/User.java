@@ -25,11 +25,9 @@ import java.util.List;
 @NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
-    @Column(nullable = false)
-    private String firstName;
 
     @Column(nullable = false)
-    private String lastName;
+    private String fullName;
 
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;

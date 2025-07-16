@@ -1,12 +1,10 @@
 package org.example.izzy.service.impl.admin;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.example.izzy.model.entity.Attachment;
 import org.example.izzy.repo.AttachmentRepository;
 import org.example.izzy.service.interfaces.admin.AdminAttachmentService;
-import org.example.izzy.service.interfaces.S3Service;
+import org.example.izzy.service.interfaces.general.S3Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

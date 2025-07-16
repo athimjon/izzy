@@ -1,7 +1,7 @@
-package org.example.izzy.service.impl;
+package org.example.izzy.service.impl.general;
 
 import lombok.RequiredArgsConstructor;
-import org.example.izzy.service.interfaces.S3Service;
+import org.example.izzy.service.interfaces.general.S3Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

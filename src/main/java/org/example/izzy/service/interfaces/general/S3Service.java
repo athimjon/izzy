@@ -1,4 +1,4 @@
-package org.example.izzy.service.interfaces;
+package org.example.izzy.service.interfaces.general;
 
 import org.springframework.web.multipart.MultipartFile;
 
