@@ -1,4 +1,4 @@
-package org.example.izzy.model.dto.request.general;
+package org.example.izzy.model.dto.request.general.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

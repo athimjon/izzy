@@ -1,16 +1,16 @@
-package org.example.izzy.service.impl.general;
+package org.example.izzy.service.impl.general.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.config.security.JwtService;
 import org.example.izzy.exception.InvalidCredentialsException;
 import org.example.izzy.exception.ResourceNotFoundException;
-import org.example.izzy.model.dto.request.general.LoginReq;
+import org.example.izzy.model.dto.request.general.auth.LoginReq;
 import org.example.izzy.model.dto.response.general.AuthResponse;
 import org.example.izzy.model.dto.response.general.UserRes;
 import org.example.izzy.model.entity.User;
 import org.example.izzy.repo.UserRepository;
-import org.example.izzy.service.interfaces.general.AuthService;
+import org.example.izzy.service.interfaces.general.auth.AuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -30,9 +30,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-
-
-
 
 
     @Override
@@ -67,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
                 user.getId(),
                 user.getFullName(),
                 user.getPhoneNumber(),
-                user.getRoles().stream().map(Object::toString).toList()
+                user.getRoles().stream().map(role -> role.getRoleName().name()).toList()
         );
         return new AuthResponse("We are happy to see you back😁, " + user.getFullName(), userRes);
     }

@@ -1,8 +1,8 @@
-package org.example.izzy.service.interfaces.general;
+package org.example.izzy.service.interfaces.general.auth;
 
 import jakarta.validation.Valid;
-import org.example.izzy.model.dto.request.general.CodeVerificationReq;
-import org.example.izzy.model.dto.request.general.PhoneVerificationReq;
+import org.example.izzy.model.dto.request.general.auth.CodeVerificationReq;
+import org.example.izzy.model.dto.request.general.auth.PhoneVerificationReq;
 
 public interface VerifyService  {
     void sendVerificationCode(@Valid PhoneVerificationReq phoneNumber);

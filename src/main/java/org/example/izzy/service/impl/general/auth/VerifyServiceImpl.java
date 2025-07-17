@@ -1,12 +1,12 @@
-package org.example.izzy.service.impl.general;
+package org.example.izzy.service.impl.general.auth;
 
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.izzy.model.dto.request.general.CodeVerificationReq;
-import org.example.izzy.model.dto.request.general.PhoneVerificationReq;
-import org.example.izzy.service.interfaces.general.VerifyService;
+import org.example.izzy.model.dto.request.general.auth.CodeVerificationReq;
+import org.example.izzy.model.dto.request.general.auth.PhoneVerificationReq;
+import org.example.izzy.service.interfaces.general.auth.VerifyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

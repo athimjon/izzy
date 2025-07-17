@@ -27,7 +27,7 @@ public class Category extends BaseEntity {
     @JoinColumn
     private Category parent;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(nullable = false)
     private Attachment attachment;
 

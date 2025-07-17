@@ -1,10 +1,10 @@
-package org.example.izzy.controller.general;
+package org.example.izzy.controller.general.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.izzy.model.dto.request.general.CodeVerificationReq;
-import org.example.izzy.model.dto.request.general.PhoneVerificationReq;
-import org.example.izzy.service.interfaces.general.VerifyService;
+import org.example.izzy.model.dto.request.general.auth.CodeVerificationReq;
+import org.example.izzy.model.dto.request.general.auth.PhoneVerificationReq;
+import org.example.izzy.service.interfaces.general.auth.VerifyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

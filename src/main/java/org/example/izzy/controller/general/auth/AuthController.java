@@ -1,10 +1,10 @@
-package org.example.izzy.controller.general;
+package org.example.izzy.controller.general.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.example.izzy.model.dto.request.general.LoginReq;
+import org.example.izzy.model.dto.request.general.auth.LoginReq;
 import org.example.izzy.model.dto.response.general.AuthResponse;
-import org.example.izzy.service.interfaces.general.AuthService;
+import org.example.izzy.service.interfaces.general.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

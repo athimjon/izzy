@@ -39,6 +39,15 @@ public class SecurityConfig {
                                 API + V1 + VERIFY + SEND,
                                 API + V1 + VERIFY + CHECK
                         ).permitAll()
+
+                        .requestMatchers(
+                                API + V1 + ADMIN + CATEGORY + "/**",
+                                API + V1 + ADMIN + ATTACHMENT + "/**"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/**",
+                                "/category-crud.html"
+                                ).permitAll()
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
