@@ -26,14 +26,12 @@ public interface CategoryMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "parent", source = "parentId", qualifiedByName = "mapParentIdToCategory")
     @Mapping(target = "attachment", source = "attachmentId", qualifiedByName = "mapAttachmentIdToAttachment")
-    @Mapping(target = "children", source = "childrenIds", qualifiedByName = "mapChildrenIdsToCategories")
     Category toCategoryEntity(AdminCategoryReq adminCategoryReq);
 
 
 
     @Mapping(target = "parent", source = "parentId", qualifiedByName = "mapParentIdToCategory")
     @Mapping(target = "attachment", source = "attachmentId", qualifiedByName = "mapAttachmentIdToAttachment")
-    @Mapping(target = "children", source = "childrenIds", qualifiedByName = "mapChildrenIdsToCategories")
     void updateCategoryFromAdminCategoryReq(AdminCategoryReq req, @MappingTarget Category category); ///We use @MappingTarget to update the existing Category entity in-place.
 
 

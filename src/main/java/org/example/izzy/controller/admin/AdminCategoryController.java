@@ -29,6 +29,11 @@ public class AdminCategoryController {
         List<AdminCategoryRes> categories = adminCategoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<AdminCategoryRes> getOneCategory(@PathVariable @Positive Long categoryId) {
+       AdminCategoryRes category = adminCategoryService.getOneCategory(categoryId);
+        return ResponseEntity.ok(category);
+    }
 
 
     @PostMapping

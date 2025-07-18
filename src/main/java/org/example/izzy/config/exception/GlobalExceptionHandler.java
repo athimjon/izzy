@@ -3,6 +3,7 @@ package org.example.izzy.config.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.example.izzy.exception.InvalidCategoryHierarchyException;
 import org.example.izzy.exception.InvalidCredentialsException;
 import org.example.izzy.exception.ResourceNotFoundException;
 import org.example.izzy.model.dto.response.general.ErrorResponse;
@@ -36,13 +37,34 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(
+            ResourceNotFoundException exception,
+            HttpServletRequest request
+    ) {
         ErrorResponse response = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getMessage(),
-                exception.getClass().getSimpleName()
+                exception.getClass().getSimpleName(),
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidCategoryHierarchyException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCategoryHierarchyException(
+            InvalidCategoryHierarchyException ex,
+            HttpServletRequest request
+    ) {
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                "Invalid Category Hierarchy",
+                LocalDateTime.now(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
 
@@ -97,33 +119,48 @@ public class GlobalExceptionHandler {
 //  ‼️‼️‼️‼️‼️    AUTHENTICATION RELATED ONES ‼️‼️‼️‼️‼️
 
     @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<ErrorResponse> handleDisabledUser(DisabledException ex) {
+    public ResponseEntity<ErrorResponse> handleDisabledUser(
+            DisabledException ex,
+            HttpServletRequest request
+    ) {
         ErrorResponse err = new ErrorResponse(
                 HttpStatus.FORBIDDEN.value(),
                 ex.getMessage(),
-                HttpStatus.FORBIDDEN.name()
+                HttpStatus.FORBIDDEN.name(),
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
         return new ResponseEntity<>(err, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidCredentials(InvalidCredentialsException ex) {
+    public ResponseEntity<ErrorResponse> handleInvalidCredentials(
+            InvalidCredentialsException ex,
+            HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.UNAUTHORIZED.value(),
                 ex.getMessage(),
-                HttpStatus.UNAUTHORIZED.name());
+                HttpStatus.UNAUTHORIZED.name(),
+                LocalDateTime.now(),
+                request.getRequestURI()
+        );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     //🔴🔴🔴🔴🔴🔴    GENERIC EXCEPTION HANDLER 🔴🔴🔴🔴
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleGeneralException(
+            Exception ex,
+            HttpServletRequest request
+    ) {
         logger.warn("Unexpected error occurred [ 500-Internal Server Error ]", ex);
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "🔴An unexpected error occurred!🔴",
-                null
+                null,
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 

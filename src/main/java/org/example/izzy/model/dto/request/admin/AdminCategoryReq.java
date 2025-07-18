@@ -18,11 +18,7 @@ public record AdminCategoryReq(
 
         @NotNull(message = "Attachment ID is required and cannot be null.")
         @Positive(message = "Attachment ID must be a positive number greater than zero.")
-        Long attachmentId,
-
-        @Nullable
-        Set<@Positive(message = "Each child category ID must be a positive number greater than zero.") Long> childrenIds
-
+        Long attachmentId
 
 ) {
 }

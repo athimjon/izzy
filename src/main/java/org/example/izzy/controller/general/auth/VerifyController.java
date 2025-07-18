@@ -31,7 +31,7 @@ public class VerifyController {
         boolean isValid = verifyService.verifyCode(codeVerificationReq);
         return isValid
                 ? ResponseEntity.ok("Phone Number verified successfully.")
-                : ResponseEntity.badRequest().body("Invalid Verification code or Phone number.");
+                : ResponseEntity.badRequest().body("Invalid Verification code or Phone Number.");
     }
 
 }

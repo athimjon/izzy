@@ -3,51 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category Management</title>
+    <title>Category Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .btn-gradient {
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-gradient {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-success-gradient {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .btn-warning-gradient {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .btn-danger-gradient {
+            background: var(--danger-gradient);
+            color: white;
+        }
+
+        .btn-info-gradient {
+            background: var(--info-gradient);
+            color: #333;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .table thead {
+            background: var(--dark-gradient);
+            color: white;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .status-inactive {
+            background: var(--danger-gradient);
+            color: white;
+        }
+
+        .category-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #fff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: #764ba2;
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-upload-area.dragover {
+            border-color: #764ba2;
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+
+            .btn-group-vertical .btn {
+                margin-bottom: 0.25rem;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-            <div class="position-sticky pt-3">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <i class="bi bi-list-ul me-2"></i>Categories
-                        </a>
-                    </li>
-                    <!-- Add more menu items as needed -->
-                </ul>
-            </div>
-        </nav>
+<!-- Loading Spinner -->
+<div class="loading-spinner">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 
-        <!-- Main Content -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Category Management</h1>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                    <i class="bi bi-plus-circle"></i> Add Category
+<!-- Header -->
+<div class="admin-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="mb-0"><i class="fas fa-tags me-3"></i>Category Management</h1>
+                <p class="mb-0 opacity-75">Manage your categories with ease</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <button class="btn btn-light btn-gradient" onclick="openCreateModal()">
+                    <i class="fas fa-plus me-2"></i>Add New Category
                 </button>
             </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Toast Notifications -->
-            <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 11"></div>
-
-            <!-- Categories Table -->
+<!-- Main Content -->
+<div class="container">
+    <div class="card animate-fade-in">
+        <div class="card-header bg-white">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Categories List</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search categories...">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-hover mb-0">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Name</th>
                         <th>Image</th>
+                        <th>Name</th>
                         <th>Parent</th>
+                        <th>Children</th>
                         <th>Status</th>
-                        <th>Created At</th>
+                        <th>Created</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -56,182 +260,500 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- Pagination -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center" id="pagination">
-                    <!-- Pagination will be loaded here -->
-                </ul>
-            </nav>
-        </main>
-    </div>
-</div>
-
-<!-- Add Category Modal -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addCategoryForm" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="categoryName" class="form-label">Category Name*</label>
-                        <input type="text" class="form-control" id="categoryName" name="name" required>
-                        <div class="invalid-feedback" id="nameError"></div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="parentCategory" class="form-label">Parent Category</label>
-                        <select class="form-select" id="parentCategory" name="parentId">
-                            <option value="">None</option>
-                            <!-- Parent categories will be loaded here -->
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="categoryImage" class="form-label">Category Image*</label>
-                        <input type="file" class="form-control" id="categoryImage" name="file" accept="image/*" required>
-                        <div class="invalid-feedback" id="imageError"></div>
-                        <div id="imagePreviewContainer" class="mt-2 d-none">
-                            <img id="imagePreview" src="#" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Child Categories</label>
-                        <div id="childrenCheckboxes" class="border p-2" style="max-height: 150px; overflow-y: auto;">
-                            <!-- Child category checkboxes will be loaded here -->
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveCategoryBtn">Save Category</button>
-            </div>
         </div>
     </div>
 </div>
 
-<!-- Edit Category Modal -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="modalTitle">
+                    <i class="fas fa-plus me-2"></i>Add New Category
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm">
-                    <input type="hidden" id="editCategoryId" name="id">
-                    <div class="mb-3">
-                        <label for="editCategoryName" class="form-label">Category Name*</label>
-                        <input type="text" class="form-control" id="editCategoryName" name="name" required>
-                        <div class="invalid-feedback" id="editNameError"></div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="editParentCategory" class="form-label">Parent Category</label>
-                        <select class="form-select" id="editParentCategory" name="parentId">
-                            <option value="">None</option>
-                            <!-- Parent categories will be loaded here -->
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="editCategoryImage" class="form-label">Category Image</label>
-                        <input type="file" class="form-control" id="editCategoryImage" name="file" accept="image/*">
-                        <div class="invalid-feedback" id="editImageError"></div>
-                        <div id="editImagePreviewContainer" class="mt-2">
-                            <img id="editImagePreview" src="#" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
-                            <input type="hidden" id="currentAttachmentId" name="attachmentId">
+                <form id="categoryForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">
+                                    <i class="fas fa-tag me-1"></i>Category Name *
+                                </label>
+                                <input type="text" class="form-control" id="categoryName" required>
+                            </div>
                         </div>
-                        <small class="text-muted">Leave empty to keep current image</small>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="parentCategory" class="form-label">
+                                    <i class="fas fa-sitemap me-1"></i>Parent Category
+                                </label>
+                                <select class="form-select" id="parentCategory">
+                                    <option value="">No Parent (Root Category)</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Child Categories</label>
-                        <div id="editChildrenCheckboxes" class="border p-2" style="max-height: 150px; overflow-y: auto;">
-                            <!-- Child category checkboxes will be loaded here -->
+                        <label class="form-label">
+                            <i class="fas fa-image me-1"></i>Category Image *
+                        </label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                            <h5>Drop your image here or click to browse</h5>
+                            <p class="text-muted">Supports: JPG, PNG, GIF (Max: 5MB)</p>
+                            <input type="file" id="categoryImage" accept="image/*" style="display: none;" required>
+                        </div>
+                        <div id="imagePreview" class="mt-3" style="display: none;">
+                            <img id="previewImg" class="img-thumbnail" style="max-width: 200px;">
+                            <button type="button" class="btn btn-sm btn-danger ms-2" onclick="removeImage()">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateCategoryBtn">Update Category</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="confirmationModalBody">
-                Are you sure you want to perform this action?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirm</button>
+                <button type="button" class="btn btn-primary-gradient btn-gradient" onclick="saveCategory()">
+                    <i class="fas fa-save me-2"></i>Save Category
+                </button>
             </div>
         </div>
     </div>
 </div>
-<!-- View Category Modal -->
-<div class="modal fade" id="viewCategoryModal" tabindex="-1" aria-labelledby="viewCategoryModalLabel" aria-hidden="true">
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewCategoryModalLabel">Category Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">
+                    <i class="fas fa-eye me-2"></i>Category Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4 text-center mb-3">
-                        <img id="viewImage" src="#" alt="Category Image" class="img-fluid rounded" style="max-height: 200px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="mb-3">
-                            <h4 id="viewName" class="mb-0"></h4>
-                            <span id="viewStatus" class="badge rounded-pill mt-2"></span>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>Parent Category:</strong> <span id="viewParent"></span></p>
-                                <p><strong>Created By:</strong> <span id="viewCreatedBy"></span></p>
-                                <p><strong>Created At:</strong> <span id="viewCreatedAt"></span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Last Updated By:</strong> <span id="viewUpdatedBy"></span></p>
-                                <p><strong>Last Updated At:</strong> <span id="viewUpdatedAt"></span></p>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <h5>Child Categories</h5>
-                            <ul id="viewChildren" class="list-group" style="max-height: 150px; overflow-y: auto;">
-                                <!-- Children will be listed here -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body" id="viewModalBody">
+                <!-- Category details will be loaded here -->
             </div>
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+<script>
+    // Configuration
+    const API_BASE_URL = 'http://localhost:8080/api/v1/admin';
+
+    // Global variables
+    let categories = [];
+    let isEditMode = false;
+    let editingCategoryId = null;
+    let editingAttachmentId = null;
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCategories();
+        setupEventListeners();
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // File upload area
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('categoryImage');
+
+        fileUploadArea.addEventListener('click', () => fileInput.click());
+        fileUploadArea.addEventListener('dragover', handleDragOver);
+        fileUploadArea.addEventListener('dragleave', handleDragLeave);
+        fileUploadArea.addEventListener('drop', handleDrop);
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', filterCategories);
+    }
+
+    // File upload handlers
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('dragover');
+    }
+
+    function handleDragLeave(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileSelect({ target: { files } });
+        }
+    }
+
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showError('File size must be less than 5MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('fileUploadArea').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeImage() {
+        document.getElementById('categoryImage').value = '';
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('fileUploadArea').style.display = 'block';
+    }
+
+    // API Functions
+    async function loadCategories() {
+        showLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/category`);
+            if (!response.ok) throw new Error('Failed to load categories');
+
+            categories = await response.json();
+            renderCategories(categories);
+        } catch (error) {
+            showError('Failed to load categories: ' + error.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    async function saveAttachment(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(`${API_BASE_URL}/attachment`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('Failed to save attachment');
+        return await response.json();
+    }
+
+    async function updateAttachment(attachmentId, file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(`${API_BASE_URL}/attachment/${attachmentId}`, {
+            method: 'PUT',
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('Failed to update attachment');
+    }
+
+    async function saveCategory() {
+        const form = document.getElementById('categoryForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const name = document.getElementById('categoryName').value.trim();
+        const parentId = document.getElementById('parentCategory').value || null;
+        const fileInput = document.getElementById('categoryImage');
+
+        if (!fileInput.files[0] && !isEditMode) {
+            showError('Please select an image for the category');
+            return;
+        }
+
+        showLoading(true);
+
+        try {
+            let attachmentId = editingAttachmentId;
+
+            // Handle file upload
+            if (fileInput.files[0]) {
+                if (isEditMode && editingAttachmentId) {
+                    await updateAttachment(editingAttachmentId, fileInput.files[0]);
+                } else {
+                    attachmentId = await saveAttachment(fileInput.files[0]);
+                }
+            }
+
+            // Save/Update category
+            const categoryData = {
+                name: name,
+                parentId: parentId ? parseInt(parentId) : null,
+                attachmentId: attachmentId
+            };
+
+            const url = isEditMode
+                ? `${API_BASE_URL}/category/${editingCategoryId}`
+                : `${API_BASE_URL}/category`;
+
+            const method = isEditMode ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(categoryData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to save category');
+            }
+
+            showSuccess(isEditMode ? 'Category updated successfully!' : 'Category created successfully!');
+            bootstrap.Modal.getInstance(document.getElementById('categoryModal')).hide();
+            loadCategories();
+
+        } catch (error) {
+            showError('Failed to save category: ' + error.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    async function toggleCategoryStatus(categoryId) {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'This will change the category status',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#667eea',
+            cancelButtonColor: '#ff6b6b',
+            confirmButtonText: 'Yes, change it!'
+        });
+
+        if (result.isConfirmed) {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE_URL}/category/${categoryId}`, {
+                    method: 'PATCH'
+                });
+
+                if (!response.ok) throw new Error('Failed to update category status');
+
+                const message = await response.text();
+                showSuccess(message);
+                loadCategories();
+            } catch (error) {
+                showError('Failed to update status: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+    }
+
+    // UI Functions
+    function renderCategories(categoriesToRender) {
+        const tbody = document.getElementById('categoriesTableBody');
+
+        if (categoriesToRender.length === 0) {
+            tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No categories found</h5>
+                        </td>
+                    </tr>
+                `;
+            return;
+        }
+
+        tbody.innerHTML = categoriesToRender.map(category => `
+                <tr>
+                    <td>
+                        <img src="${category.attachmentUrl}" alt="${category.name}" class="category-image">
+                    </td>
+                    <td>
+                        <strong>${category.name}</strong>
+                        <br><small class="text-muted">ID: ${category.id}</small>
+                    </td>
+                    <td>
+                        ${category.parentName ? `<span class="badge bg-info">${category.parentName}</span>` : '<span class="text-muted">Root</span>'}
+                    </td>
+                    <td>
+                        ${category.childrenNames && category.childrenNames.length > 0
+            ? `<span class="badge bg-secondary">${category.childrenNames.length} children</span>`
+            : '<span class="text-muted">No children</span>'
+        }
+                    </td>
+                    <td>
+                        <span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">
+                            ${category.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                    </td>
+                    <td>
+                        <small>
+                            ${new Date(category.createdAt).toLocaleDateString()}<br>
+                            <span class="text-muted">by ${category.createdBy || 'System'}</span>
+                        </small>
+                    </td>
+                    <td>
+                        <div class="btn-group-vertical btn-group-sm" role="group">
+                            <button class="btn btn-info-gradient btn-gradient btn-sm" onclick="viewCategory(${category.id})" title="View">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-warning-gradient btn-gradient btn-sm" onclick="editCategory(${category.id})" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn ${category.isActive ? 'btn-danger-gradient' : 'btn-success-gradient'} btn-gradient btn-sm"
+                                    onclick="toggleCategoryStatus(${category.id})"
+                                    title="${category.isActive ? 'Disable' : 'Enable'}">
+                                <i class="fas ${category.isActive ? 'fa-ban' : 'fa-check'}"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+    }
+
+    function openCreateModal() {
+        isEditMode = false;
+        editingCategoryId = null;
+        editingAttachmentId = null;
+
+        document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus me-2"></i>Add New Category';
+        document.getElementById('categoryForm').reset();
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('fileUploadArea').style.display = 'block';
+        document.getElementById('categoryImage').required = true;
+
+        loadParentOptions();
+        new bootstrap.Modal(document.getElementById('categoryModal')).show();
+    }
+
+    async function editCategory(categoryId) {
+        showLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
+            if (!response.ok) throw new Error('Failed to load category');
+
+            const category = await response.json();
+
+            isEditMode = true;
+            editingCategoryId = categoryId;
+            editingAttachmentId = category.id; // Assuming attachment ID is same as category ID based on your structure
+
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit me-2"></i>Edit Category';
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('parentCategory').value = category.parentId || '';
+            document.getElementById('categoryImage').required = false;
+
+            // Show current image
+            if (category.attachmentUrl) {
+                document.getElementById('previewImg').src = category.attachmentUrl;
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('fileUploadArea').style.display = 'none';
+            }
+
+            loadParentOptions(categoryId);
+            new bootstrap.Modal(document.getElementById('categoryModal')).show();
+
+        } catch (error) {
+            showError('Failed to load category: ' + error.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    async function viewCategory(categoryId) {
+        showLoading(true);
+        try {
+            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
+            if (!response.ok) throw new Error('Failed to load category');
+
+            const category = await response.json();
+
+            document.getElementById('viewModalBody').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="${category.attachmentUrl}" alt="${category.name}" class="img-fluid rounded shadow">
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-borderless">
+                                <tr><th>Name:</th><td>${category.name}</td></tr>
+                                <tr><th>ID:</th><td>${category.id}</td></tr>
+                                <tr><th>Parent:</th><td>${category.parentName || 'Root Category'}</td></tr>
+                                <tr><th>Status:</th><td><span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">${category.isActive ? 'Active' : 'Inactive'}</span></td></tr>
+                                <tr><th>Children:</th><td>${category.childrenNames && category.childrenNames.length > 0 ? category.childrenNames.join(', ') : 'No children'}</td></tr>
+                                <tr><th>Created:</th><td>${new Date(category.createdAt).toLocaleString()}</td></tr>
+                                <tr><th>Created By:</th><td>${category.createdBy || 'System'}</td></tr>
+                                <tr><th>Updated:</th><td>${new Date(category.updatedAt).toLocaleString()}</td></tr>
+                                <tr><th>Updated By:</th><td>${category.updatedBy || 'System'}</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                `;
+
+            new bootstrap.Modal(document.getElementById('viewModal')).show();
+
+        } catch (error) {
+            showError('Failed to load category: ' + error.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function loadParentOptions(excludeId = null) {
+        const select = document.getElementById('parentCategory');
+        select.innerHTML = '<option value="">No Parent (Root Category)</option>';
+
+        categories
+            .filter(cat => cat.id !== excludeId)
+            .forEach(category => {
+                select.innerHTML += `<option value="${category.id}">${category.name}</option>`;
+            });
+    }
+
+    function filterCategories() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = categories.filter(category =>
+            category.name.toLowerCase().includes(searchTerm) ||
+            (category.parentName && category.parentName.toLowerCase().includes(searchTerm))
+        );
+        renderCategories(filtered);
+    }
+
+    // Utility Functions
+    function showLoading(show) {
+        document.querySelector('.loading-spinner').style.display = show ? 'block' : 'none';
+    }
+
+    function showSuccess(message) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: message,
+            confirmButtonColor: '#667eea'
+        });
+    }
+
+    function showError(message) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: message,
+            confirmButtonColor: '#ff6b6b'
+        });
+    }
+</script>
 </body>
 </html>

@@ -14,23 +14,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryMapperHelper {
 
-    private final CategoryRepository categoryRepository;
 
-
-    @Named("mapChildrenIdsToCategories")
-    public Set<Category> mapChildrenIdsToCategories(Set<Long> childrenIds) {
-        if (childrenIds == null || childrenIds.isEmpty()) {
-            return new HashSet<>();
-        }
-        Set<Category> children = new HashSet<>(categoryRepository.findAllById(childrenIds));
-        for (Category child : children) {
-            child.setParent(null); // avoid cyclic dependency if needed
-        }
-        return children;
-    }
 
     @Named("mapChildrenToChildrenIds")
     public Set<Long> mapChildrenIds(Set<Category> children) {
+        if (children==null) return null;
         return children.stream()
                 .map(Category::getId)
                 .collect(Collectors.toSet());
@@ -38,6 +26,7 @@ public class CategoryMapperHelper {
 
     @Named("mapChildrenToChildrenNames")
     public Set<String> mapChildrenNames(Set<Category> children) {
+        if (children==null) return null;
         return children.stream()
                 .map(Category::getName)
                 .collect(Collectors.toSet());

@@ -17,14 +17,17 @@ import java.io.InputStream;
 public class S3ServiceImpl implements S3Service {
     @Value("${aws.s3.bucket}")
     private String bucketName;
+    @Value("${aws.s3.region}")
+    private String bucketRegion;
 
     private final S3Client s3Client;
 
     @Override
     public String uploadImage(MultipartFile file) {
 
-        String fileName = file.getOriginalFilename();
-        String key = System.currentTimeMillis() + "_" + fileName;
+        String key = generateKey(file);
+        String fileUrl = generateFileUrl(key);
+
 
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucketName)
@@ -40,7 +43,19 @@ public class S3ServiceImpl implements S3Service {
             throw new RuntimeException(e);
         }
 
+        return fileUrl;
+    }
+
+
+    private static String generateKey(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String key = System.currentTimeMillis() + "_" + fileName;
         return key;
+    }
+
+    private String generateFileUrl(String key) {
+        String fileUrl = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + key;
+        return fileUrl;
     }
 
 

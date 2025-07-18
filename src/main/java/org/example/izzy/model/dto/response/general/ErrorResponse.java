@@ -17,9 +17,8 @@ public record ErrorResponse(
         String message,
         String error,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime time
+        LocalDateTime time,
+        String path
 ) {
-    public ErrorResponse(Integer status, String message, String error) {
-        this(status,message, error,  LocalDateTime.now());
-    }
+
 }

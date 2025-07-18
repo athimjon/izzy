@@ -15,4 +15,6 @@ public interface AdminCategoryService {
     AdminCategoryRes updateCategory(@Positive Long categoryId, @Valid AdminCategoryReq categoryReq);
 
     String activateOrDeactivateCategory(Long categoryId);
+
+    AdminCategoryRes getOneCategory(@Positive Long categoryId);
 }
