@@ -49,13 +49,11 @@ public class S3ServiceImpl implements S3Service {
 
     private static String generateKey(MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        String key = System.currentTimeMillis() + "_" + fileName;
-        return key;
+        return System.currentTimeMillis() + "_" + fileName;
     }
 
     private String generateFileUrl(String key) {
-        String fileUrl = "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + key;
-        return fileUrl;
+        return "https://" + bucketName + ".s3." + bucketRegion + ".amazonaws.com/" + key;
     }
 
 

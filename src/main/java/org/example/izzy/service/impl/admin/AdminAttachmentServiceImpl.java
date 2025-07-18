@@ -3,17 +3,12 @@ package org.example.izzy.service.impl.admin;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.izzy.exception.ResourceNotFoundException;
-import org.example.izzy.model.dto.response.admin.AdminCategoryRes;
 import org.example.izzy.model.entity.Attachment;
 import org.example.izzy.repo.AttachmentRepository;
 import org.example.izzy.service.interfaces.admin.AdminAttachmentService;
 import org.example.izzy.service.interfaces.general.S3Service;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -22,11 +17,6 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
 
     private final S3Service s3Service;
     private final AttachmentRepository attachmentRepository;
-
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
-    @Value("${aws.s3.region}")
-    private String bucketRegion;
 
     @Override
     public Long saveAttachment(MultipartFile file) {

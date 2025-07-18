@@ -2,11 +2,9 @@ package org.example.izzy.mapper.helper;
 
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.model.entity.Category;
-import org.example.izzy.repo.CategoryRepository;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
