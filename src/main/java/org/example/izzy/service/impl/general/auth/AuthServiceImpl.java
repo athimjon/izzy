@@ -71,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
 
     private void generateTokenAndSetToCookie(String phoneNumber, HttpServletResponse response) {
         String token = jwtService.generateToken(phoneNumber);
-        ResponseCookie cookie = ResponseCookie.from("token", token)
+        ResponseCookie cookie = ResponseCookie.from("izzy-token", token)
                 .httpOnly(true)
                 .secure(false) // Only if using HTTPS
                 .path("/") // Available across the app

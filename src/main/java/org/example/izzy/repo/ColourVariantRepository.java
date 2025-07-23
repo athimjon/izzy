@@ -1,0 +1,9 @@
+package org.example.izzy.repo;
+
+import org.example.izzy.model.entity.ColourVariant;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface ColourVariantRepository extends JpaRepository<ColourVariant, UUID> {
+}

@@ -9,6 +9,8 @@ import org.example.izzy.repo.CategoryRepository;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class GeneralMapperHelper {
@@ -16,17 +18,24 @@ public class GeneralMapperHelper {
     private final CategoryRepository categoryRepository;
 
     @Named("mapAttachmentIdToAttachment")
-    public Attachment mapAttachmentIdToAttachment(Long attachmentId) {
+    public Attachment mapAttachmentIdToAttachment(UUID attachmentId) {
         return attachmentRepository.findById(attachmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Attachment with ID " + attachmentId + " not found"));
     }
+
     @Named("mapParentIdToCategory")
-    public Category mapParentIdToCategory(Long parentId) {
+    public Category mapParentIdToCategory(UUID parentId) {
         if (parentId == null) {
             return null;
         }
         return categoryRepository.findById(parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent Category with ID " + parentId + " not found!"));
+    }
+
+    @Named("mapCategoryIdToCategory")
+    public Category mapCategoryIdToCategory(UUID categoryId) {
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category with ID " + categoryId + " not found!"));
     }
 
 

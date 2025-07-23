@@ -3,167 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category Admin Panel</title>
+    <title>Category Management - Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
-            --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
+            background-color: var(--light-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .admin-header {
-            background: var(--primary-gradient);
-            color: white;
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-container {
             padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-
-        .btn-gradient {
-            border: none;
-            border-radius: 25px;
-            padding: 0.5rem 1.5rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
         }
 
-        .btn-primary-gradient {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .btn-success-gradient {
-            background: var(--success-gradient);
-            color: white;
-        }
-
-        .btn-warning-gradient {
-            background: var(--warning-gradient);
-            color: white;
-        }
-
-        .btn-danger-gradient {
-            background: var(--danger-gradient);
-            color: white;
-        }
-
-        .btn-info-gradient {
-            background: var(--info-gradient);
-            color: #333;
-        }
-
-        .btn-gradient:hover {
+        .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
 
-        .table {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        .card-header {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1.5rem;
         }
 
-        .table thead {
-            background: var(--dark-gradient);
-            color: white;
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
         }
 
-        .table tbody tr {
-            transition: background-color 0.3s ease;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
 
-        .table tbody tr:hover {
-            background-color: rgba(102, 126, 234, 0.1);
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            margin: 0 2px;
         }
 
         .modal-content {
             border: none;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
 
         .modal-header {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            border-radius: 20px 20px 0 0;
+            border-radius: 12px 12px 0 0;
+            border-bottom: none;
         }
 
         .form-control, .form-select {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        }
+
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: none;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-color: #f1f5f9;
         }
 
         .status-badge {
             padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
         .status-active {
-            background: var(--success-gradient);
-            color: white;
+            background-color: #dcfce7;
+            color: #166534;
         }
 
         .status-inactive {
-            background: var(--danger-gradient);
-            color: white;
+            background-color: #fee2e2;
+            color: #991b1b;
         }
 
         .category-image {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
-            border-radius: 10px;
-            border: 3px solid #fff;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
         }
 
         .loading-spinner {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
         }
 
         .file-upload-area {
-            border: 2px dashed #667eea;
-            border-radius: 15px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
             padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
@@ -171,79 +172,116 @@
         }
 
         .file-upload-area:hover {
-            border-color: #764ba2;
-            background-color: rgba(102, 126, 234, 0.05);
+            border-color: var(--primary-color);
+            background-color: #f8fafc;
         }
 
         .file-upload-area.dragover {
-            border-color: #764ba2;
-            background-color: rgba(102, 126, 234, 0.1);
+            border-color: var(--primary-color);
+            background-color: #f0f9ff;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+            color: #64748b;
         }
 
         @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem 0;
+            }
+
+            .card-header {
+                padding: 1rem;
+            }
+
+            .btn-sm {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
             .table-responsive {
                 font-size: 0.875rem;
             }
-
-            .btn-group-vertical .btn {
-                margin-bottom: 0.25rem;
-            }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-<!-- Loading Spinner -->
-<div class="loading-spinner">
-    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div>
-
-<!-- Header -->
-<div class="admin-header">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h1 class="mb-0"><i class="fas fa-tags me-3"></i>Category Management</h1>
-                <p class="mb-0 opacity-75">Manage your categories with ease</p>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <button class="btn btn-light btn-gradient" onclick="openCreateModal()">
-                    <i class="fas fa-plus me-2"></i>Add New Category
-                </button>
-            </div>
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="bi bi-grid-3x3-gap-fill me-2"></i>
+            Category Manager
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
 
 <!-- Main Content -->
-<div class="container">
-    <div class="card animate-fade-in">
-        <div class="card-header bg-white">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Categories List</h5>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        <input type="text" class="form-control" id="searchInput" placeholder="Search categories...">
-                    </div>
-                </div>
+<div class="container main-container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+        </ol>
+    </nav>
+
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Main Card -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 fw-bold text-dark">
+                    <i class="bi bi-folder-fill me-2"></i>
+                    Category Management
+                </h4>
+                <p class="mb-0 text-muted mt-1">Manage your product categories</p>
             </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal" onclick="openCreateModal()">
+                <i class="bi bi-plus-circle me-2"></i>
+                Add Category
+            </button>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body">
+            <!-- Loading Spinner -->
+            <div class="loading-spinner text-center py-5" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading categories...</p>
+            </div>
+
+            <!-- Categories Table -->
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table table-hover" id="categoriesTable" style="display: none;">
                     <thead>
                     <tr>
                         <th>Image</th>
@@ -256,7 +294,6 @@
                     </tr>
                     </thead>
                     <tbody id="categoriesTableBody">
-                    <!-- Categories will be loaded here -->
                     </tbody>
                 </table>
             </div>
@@ -264,32 +301,35 @@
     </div>
 </div>
 
-<!-- Create/Edit Modal -->
+<!-- Category Modal -->
 <div class="modal fade" id="categoryModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitle">
-                    <i class="fas fa-plus me-2"></i>Add New Category
+                    <i class="bi bi-folder-plus me-2"></i>
+                    Add New Category
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="categoryForm">
+                    <input type="hidden" id="categoryId">
+                    <input type="hidden" id="currentAttachmentId">
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="categoryName" class="form-label">
-                                    <i class="fas fa-tag me-1"></i>Category Name *
+                                <label for="categoryName" class="form-label fw-semibold">
+                                    Category Name <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control" id="categoryName" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="parentCategory" class="form-label">
-                                    <i class="fas fa-sitemap me-1"></i>Parent Category
-                                </label>
+                                <label for="parentCategory" class="form-label fw-semibold">Parent Category</label>
                                 <select class="form-select" id="parentCategory">
                                     <option value="">No Parent (Root Category)</option>
                                 </select>
@@ -298,46 +338,67 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">
-                            <i class="fas fa-image me-1"></i>Category Image *
+                        <label class="form-label fw-semibold">
+                            Category Image <span class="text-danger">*</span>
                         </label>
                         <div class="file-upload-area" id="fileUploadArea">
-                            <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
-                            <h5>Drop your image here or click to browse</h5>
-                            <p class="text-muted">Supports: JPG, PNG, GIF (Max: 5MB)</p>
-                            <input type="file" id="categoryImage" accept="image/*" style="display: none;" required>
+                            <i class="bi bi-cloud-upload fs-1 text-muted mb-2"></i>
+                            <p class="mb-2">Click to upload or drag and drop</p>
+                            <p class="text-muted small">PNG, JPG, GIF up to 10MB</p>
+                            <input type="file" class="d-none" id="categoryImage" accept="image/*" required>
                         </div>
+                        <div class="invalid-feedback"></div>
+
+                        <!-- Current Image Preview -->
+                        <div id="currentImagePreview" class="mt-3" style="display: none;">
+                            <label class="form-label fw-semibold">Current Image:</label>
+                            <div class="d-flex align-items-center">
+                                <img id="currentImage" class="category-image me-3" src="/placeholder.svg" alt="Current image">
+                                <small class="text-muted">Upload a new image to replace the current one</small>
+                            </div>
+                        </div>
+
+                        <!-- New Image Preview -->
                         <div id="imagePreview" class="mt-3" style="display: none;">
-                            <img id="previewImg" class="img-thumbnail" style="max-width: 200px;">
-                            <button type="button" class="btn btn-sm btn-danger ms-2" onclick="removeImage()">
-                                <i class="fas fa-trash"></i> Remove
-                            </button>
+                            <label class="form-label fw-semibold">New Image Preview:</label>
+                            <div class="d-flex align-items-center">
+                                <img id="previewImage" class="category-image me-3" src="/placeholder.svg" alt="Preview">
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeImagePreview()">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary-gradient btn-gradient" onclick="saveCategory()">
-                    <i class="fas fa-save me-2"></i>Save Category
+                <button type="button" class="btn btn-primary" id="saveButton" onclick="saveCategory()">
+                    <span class="spinner-border spinner-border-sm me-2 d-none" id="saveSpinner"></span>
+                    <i class="bi bi-check-circle me-2"></i>
+                    Save Category
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- View Modal -->
+<!-- View Category Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-eye me-2"></i>Category Details
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white">
+                    <i class="bi bi-eye me-2"></i>
+                    Category Details
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body" id="viewModalBody">
-                <!-- Category details will be loaded here -->
+            <div class="modal-body">
+                <div id="categoryDetails"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -345,100 +406,448 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
-<script>
-    // Configuration
-    const API_BASE_URL = 'http://localhost:8080/api/v1/admin';
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
+<script>
     // Global variables
     let categories = [];
+    let dataTable;
     let isEditMode = false;
-    let editingCategoryId = null;
-    let editingAttachmentId = null;
+
+    // API Base URL - Update this to match your backend
+    const API_BASE_URL = '/api/v1/admin';
 
     // Initialize the application
     document.addEventListener('DOMContentLoaded', function() {
         loadCategories();
-        setupEventListeners();
+        setupFileUpload();
     });
 
-    // Setup event listeners
-    function setupEventListeners() {
-        // File upload area
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const fileInput = document.getElementById('categoryImage');
+    // Load all categories
+    async function loadCategories() {
+        try {
+            showLoading(true);
+            const response = await fetch(`${API_BASE_URL}/category`);
 
-        fileUploadArea.addEventListener('click', () => fileInput.click());
-        fileUploadArea.addEventListener('dragover', handleDragOver);
-        fileUploadArea.addEventListener('dragleave', handleDragLeave);
-        fileUploadArea.addEventListener('drop', handleDrop);
-        fileInput.addEventListener('change', handleFileSelect);
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', filterCategories);
-    }
-
-    // File upload handlers
-    function handleDragOver(e) {
-        e.preventDefault();
-        e.currentTarget.classList.add('dragover');
-    }
-
-    function handleDragLeave(e) {
-        e.preventDefault();
-        e.currentTarget.classList.remove('dragover');
-    }
-
-    function handleDrop(e) {
-        e.preventDefault();
-        e.currentTarget.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            handleFileSelect({ target: { files } });
-        }
-    }
-
-    function handleFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                showError('File size must be less than 5MB');
-                return;
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewImg').src = e.target.result;
-                document.getElementById('imagePreview').style.display = 'block';
-                document.getElementById('fileUploadArea').style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function removeImage() {
-        document.getElementById('categoryImage').value = '';
-        document.getElementById('imagePreview').style.display = 'none';
-        document.getElementById('fileUploadArea').style.display = 'block';
-    }
-
-    // API Functions
-    async function loadCategories() {
-        showLoading(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/category`);
-            if (!response.ok) throw new Error('Failed to load categories');
-
             categories = await response.json();
-            renderCategories(categories);
+            renderCategoriesTable();
+            populateParentDropdown();
+            showAlert('Categories loaded successfully', 'success');
         } catch (error) {
-            showError('Failed to load categories: ' + error.message);
+            console.error('Error loading categories:', error);
+            showAlert('Failed to load categories: ' + error.message, 'danger');
         } finally {
             showLoading(false);
         }
     }
 
-    async function saveAttachment(file) {
+    // Render categories table
+    function renderCategoriesTable() {
+        const tbody = document.getElementById('categoriesTableBody');
+        tbody.innerHTML = '';
+
+        categories.forEach(category => {
+            const row = createCategoryRow(category);
+            tbody.appendChild(row);
+        });
+
+        // Initialize or refresh DataTable
+        if (dataTable) {
+            dataTable.destroy();
+        }
+
+        dataTable = $('#categoriesTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            order: [[1, 'asc']],
+            columnDefs: [
+                { orderable: false, targets: [0, 6] }
+            ],
+            language: {
+                search: "Search categories:",
+                lengthMenu: "Show _MENU_ categories per page",
+                info: "Showing _START_ to _END_ of _TOTAL_ categories",
+                emptyTable: "No categories found"
+            }
+        });
+
+        document.getElementById('categoriesTable').style.display = 'table';
+    }
+
+    // Create category table row
+    function createCategoryRow(category) {
+        const row = document.createElement('tr');
+
+        const childrenNames = category.childrenNames && category.childrenNames.length > 0
+            ? Array.from(category.childrenNames).join(', ')
+            : 'None';
+
+        const createdDate = new Date(category.createdAt).toLocaleDateString();
+
+        row.innerHTML = `
+                <td>
+                    <img src="${category.attachmentUrl || '/placeholder.svg?height=50&width=50'}"
+                         alt="${category.name}" class="category-image"
+                         onerror="this.src='/placeholder.svg?height=50&width=50'">
+                </td>
+                <td>
+                    <div class="fw-semibold">${category.name}</div>
+                    <small class="text-muted">ID: ${category.id}</small>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark">
+                        ${category.parentName || 'Root Category'}
+                    </span>
+                </td>
+                <td>
+                    <small class="text-muted">${childrenNames}</small>
+                </td>
+                <td>
+                    <span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">
+                        <i class="bi bi-${category.isActive ? 'check-circle' : 'x-circle'} me-1"></i>
+                        ${category.isActive ? 'Active' : 'Inactive'}
+                    </span>
+                </td>
+                <td>
+                    <div>${createdDate}</div>
+                    <small class="text-muted">by ${category.createdBy || 'System'}</small>
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-info btn-sm" onclick="viewCategory('${category.id}')" title="View">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-warning btn-sm" onclick="editCategory('${category.id}')" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-${category.isActive ? 'danger' : 'success'} btn-sm"
+                                onclick="toggleCategoryStatus('${category.id}', ${category.isActive})"
+                                title="${category.isActive ? 'Disable' : 'Enable'}">
+                            <i class="bi bi-${category.isActive ? 'toggle-off' : 'toggle-on'}"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+
+        return row;
+    }
+
+    // Setup file upload functionality
+    function setupFileUpload() {
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('categoryImage');
+
+        fileUploadArea.addEventListener('click', () => fileInput.click());
+
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect();
+            }
+        });
+
+        fileInput.addEventListener('change', handleFileSelect);
+    }
+
+    // Handle file selection
+    function handleFileSelect() {
+        const fileInput = document.getElementById('categoryImage');
+        const file = fileInput.files[0];
+
+        if (file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showAlert('Please select a valid image file', 'danger');
+                fileInput.value = '';
+                return;
+            }
+
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert('File size must be less than 10MB', 'danger');
+                fileInput.value = '';
+                return;
+            }
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Remove image preview
+    function removeImagePreview() {
+        document.getElementById('categoryImage').value = '';
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+
+    // Open create modal
+    function openCreateModal() {
+        isEditMode = false;
+        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-folder-plus me-2"></i>Add New Category';
+        document.getElementById('categoryForm').reset();
+        document.getElementById('categoryId').value = '';
+        document.getElementById('currentAttachmentId').value = '';
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('currentImagePreview').style.display = 'none';
+        document.getElementById('categoryImage').required = true;
+        populateParentDropdown();
+        clearValidationErrors();
+    }
+
+    // View category details
+    async function viewCategory(categoryId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
+            if (!response.ok) throw new Error('Failed to fetch category details');
+
+            const category = await response.json();
+
+            const childrenList = category.childrenNames && category.childrenNames.length > 0
+                ? Array.from(category.childrenNames).map(name => `<span class="badge bg-secondary me-1">${name}</span>`).join('')
+                : '<span class="text-muted">No children</span>';
+
+            document.getElementById('categoryDetails').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="${category.attachmentUrl || '/placeholder.svg?height=200&width=200'}"
+                                 alt="${category.name}" class="img-fluid rounded shadow"
+                                 style="max-height: 200px; object-fit: cover;"
+                                 onerror="this.src='/placeholder.svg?height=200&width=200'">
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th width="30%">Name:</th>
+                                    <td><strong>${category.name}</strong></td>
+                                </tr>
+                                <tr>
+                                    <th>ID:</th>
+                                    <td><code>${category.id}</code></td>
+                                </tr>
+                                <tr>
+                                    <th>Parent:</th>
+                                    <td>${category.parentName ? `<span class="badge bg-primary">${category.parentName}</span>` : '<span class="text-muted">Root Category</span>'}</td>
+                                </tr>
+                                <tr>
+                                    <th>Children:</th>
+                                    <td>${childrenList}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>
+                                        <span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">
+                                            <i class="bi bi-${category.isActive ? 'check-circle' : 'x-circle'} me-1"></i>
+                                            ${category.isActive ? 'Active' : 'Inactive'}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Created:</th>
+                                    <td>${new Date(category.createdAt).toLocaleString()}<br>
+                                        <small class="text-muted">by ${category.createdBy || 'System'}</small></td>
+                                </tr>
+                                <tr>
+                                    <th>Updated:</th>
+                                    <td>${new Date(category.updatedAt).toLocaleString()}<br>
+                                        <small class="text-muted">by ${category.updatedBy || 'System'}</small></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                `;
+
+            new bootstrap.Modal(document.getElementById('viewModal')).show();
+        } catch (error) {
+            console.error('Error viewing category:', error);
+            showAlert('Failed to load category details: ' + error.message, 'danger');
+        }
+    }
+
+    // Edit category
+    async function editCategory(categoryId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
+            if (!response.ok) throw new Error('Failed to fetch category details');
+
+            const category = await response.json();
+
+            isEditMode = true;
+            document.getElementById('modalTitle').innerHTML = '<i class="bi bi-pencil me-2"></i>Edit Category';
+            document.getElementById('categoryId').value = category.id;
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('parentCategory').value = category.parentId || '';
+            document.getElementById('currentAttachmentId').value = category.attachmentUrl ? 'existing' : '';
+
+            // Show current image
+            if (category.attachmentUrl) {
+                document.getElementById('currentImage').src = category.attachmentUrl;
+                document.getElementById('currentImagePreview').style.display = 'block';
+            }
+
+            document.getElementById('categoryImage').required = false;
+            document.getElementById('imagePreview').style.display = 'none';
+
+            populateParentDropdown(categoryId);
+            clearValidationErrors();
+
+            new bootstrap.Modal(document.getElementById('categoryModal')).show();
+        } catch (error) {
+            console.error('Error loading category for edit:', error);
+            showAlert('Failed to load category for editing: ' + error.message, 'danger');
+        }
+    }
+
+    // Toggle category status
+    async function toggleCategoryStatus(categoryId, currentStatus) {
+        const action = currentStatus ? 'disable' : 'enable';
+
+        if (!confirm(`Are you sure you want to ${action} this category?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`, {
+                method: 'PATCH'
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to ${action} category`);
+            }
+
+            const message = await response.text();
+            showAlert(message, 'success');
+            loadCategories();
+        } catch (error) {
+            console.error(`Error ${action}ing category:`, error);
+            showAlert(`Failed to ${action} category: ` + error.message, 'danger');
+        }
+    }
+
+    // Save category (create or update)
+    async function saveCategory() {
+        try {
+            setSaveButtonLoading(true);
+            clearValidationErrors();
+
+            const name = document.getElementById('categoryName').value.trim();
+            const parentId = document.getElementById('parentCategory').value || null;
+            const fileInput = document.getElementById('categoryImage');
+
+            if (!name) {
+                showValidationError('categoryName', 'Category name is required');
+                return;
+            }
+
+            let attachmentId = document.getElementById('currentAttachmentId').value;
+
+            // Handle file upload
+            if (fileInput.files.length > 0) {
+                if (isEditMode && attachmentId === 'existing') {
+                    // Update existing attachment
+                    const categoryId = document.getElementById('categoryId').value;
+                    const category = categories.find(c => c.id === categoryId);
+                    if (category && category.attachmentUrl) {
+                        // Extract attachment ID from URL or use a different approach
+                        // For now, we'll create a new attachment
+                        attachmentId = await uploadAttachment(fileInput.files[0]);
+                    } else {
+                        attachmentId = await uploadAttachment(fileInput.files[0]);
+                    }
+                } else {
+                    // Create new attachment
+                    attachmentId = await uploadAttachment(fileInput.files[0]);
+                }
+            } else if (!isEditMode) {
+                showValidationError('categoryImage', 'Category image is required');
+                return;
+            } else if (isEditMode && !attachmentId) {
+                showAlert('Category image is required', 'danger');
+                return;
+            }
+
+            // Prepare category data
+            const categoryData = {
+                name: name,
+                parentId: parentId,
+                attachmentId: attachmentId === 'existing' ? null : attachmentId
+            };
+
+            // Remove null attachmentId for updates when no new file is uploaded
+            if (isEditMode && attachmentId === 'existing') {
+                delete categoryData.attachmentId;
+            }
+
+            // Save category
+            let response;
+            if (isEditMode) {
+                const categoryId = document.getElementById('categoryId').value;
+                response = await fetch(`${API_BASE_URL}/category/${categoryId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(categoryData)
+                });
+            } else {
+                response = await fetch(`${API_BASE_URL}/category`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(categoryData)
+                });
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                if (errorData.fieldErrors) {
+                    Object.keys(errorData.fieldErrors).forEach(field => {
+                        showValidationError(field, errorData.fieldErrors[field]);
+                    });
+                    return;
+                }
+                throw new Error(errorData.message || `Failed to ${isEditMode ? 'update' : 'create'} category`);
+            }
+
+            const savedCategory = await response.json();
+            showAlert(`Category ${isEditMode ? 'updated' : 'created'} successfully!`, 'success');
+
+            bootstrap.Modal.getInstance(document.getElementById('categoryModal')).hide();
+            loadCategories();
+
+        } catch (error) {
+            console.error('Error saving category:', error);
+            showAlert(`Failed to ${isEditMode ? 'update' : 'create'} category: ` + error.message, 'danger');
+        } finally {
+            setSaveButtonLoading(false);
+        }
+    }
+
+    // Upload attachment
+    async function uploadAttachment(file) {
         const formData = new FormData();
         formData.append('file', file);
 
@@ -447,311 +856,82 @@
             body: formData
         });
 
-        if (!response.ok) throw new Error('Failed to save attachment');
-        return await response.json();
-    }
-
-    async function updateAttachment(attachmentId, file) {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const response = await fetch(`${API_BASE_URL}/attachment/${attachmentId}`, {
-            method: 'PUT',
-            body: formData
-        });
-
-        if (!response.ok) throw new Error('Failed to update attachment');
-    }
-
-    async function saveCategory() {
-        const form = document.getElementById('categoryForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
+        if (!response.ok) {
+            throw new Error('Failed to upload attachment');
         }
 
-        const name = document.getElementById('categoryName').value.trim();
-        const parentId = document.getElementById('parentCategory').value || null;
-        const fileInput = document.getElementById('categoryImage');
-
-        if (!fileInput.files[0] && !isEditMode) {
-            showError('Please select an image for the category');
-            return;
-        }
-
-        showLoading(true);
-
-        try {
-            let attachmentId = editingAttachmentId;
-
-            // Handle file upload
-            if (fileInput.files[0]) {
-                if (isEditMode && editingAttachmentId) {
-                    await updateAttachment(editingAttachmentId, fileInput.files[0]);
-                } else {
-                    attachmentId = await saveAttachment(fileInput.files[0]);
-                }
-            }
-
-            // Save/Update category
-            const categoryData = {
-                name: name,
-                parentId: parentId ? parseInt(parentId) : null,
-                attachmentId: attachmentId
-            };
-
-            const url = isEditMode
-                ? `${API_BASE_URL}/category/${editingCategoryId}`
-                : `${API_BASE_URL}/category`;
-
-            const method = isEditMode ? 'PUT' : 'POST';
-
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(categoryData)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to save category');
-            }
-
-            showSuccess(isEditMode ? 'Category updated successfully!' : 'Category created successfully!');
-            bootstrap.Modal.getInstance(document.getElementById('categoryModal')).hide();
-            loadCategories();
-
-        } catch (error) {
-            showError('Failed to save category: ' + error.message);
-        } finally {
-            showLoading(false);
-        }
+        return await response.text(); // Returns UUID as string
     }
 
-    async function toggleCategoryStatus(categoryId) {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: 'This will change the category status',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#667eea',
-            cancelButtonColor: '#ff6b6b',
-            confirmButtonText: 'Yes, change it!'
-        });
-
-        if (result.isConfirmed) {
-            showLoading(true);
-            try {
-                const response = await fetch(`${API_BASE_URL}/category/${categoryId}`, {
-                    method: 'PATCH'
-                });
-
-                if (!response.ok) throw new Error('Failed to update category status');
-
-                const message = await response.text();
-                showSuccess(message);
-                loadCategories();
-            } catch (error) {
-                showError('Failed to update status: ' + error.message);
-            } finally {
-                showLoading(false);
-            }
-        }
-    }
-
-    // UI Functions
-    function renderCategories(categoriesToRender) {
-        const tbody = document.getElementById('categoriesTableBody');
-
-        if (categoriesToRender.length === 0) {
-            tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center py-4">
-                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">No categories found</h5>
-                        </td>
-                    </tr>
-                `;
-            return;
-        }
-
-        tbody.innerHTML = categoriesToRender.map(category => `
-                <tr>
-                    <td>
-                        <img src="${category.attachmentUrl}" alt="${category.name}" class="category-image">
-                    </td>
-                    <td>
-                        <strong>${category.name}</strong>
-                        <br><small class="text-muted">ID: ${category.id}</small>
-                    </td>
-                    <td>
-                        ${category.parentName ? `<span class="badge bg-info">${category.parentName}</span>` : '<span class="text-muted">Root</span>'}
-                    </td>
-                    <td>
-                        ${category.childrenNames && category.childrenNames.length > 0
-            ? `<span class="badge bg-secondary">${category.childrenNames.length} children</span>`
-            : '<span class="text-muted">No children</span>'
-        }
-                    </td>
-                    <td>
-                        <span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">
-                            ${category.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                    </td>
-                    <td>
-                        <small>
-                            ${new Date(category.createdAt).toLocaleDateString()}<br>
-                            <span class="text-muted">by ${category.createdBy || 'System'}</span>
-                        </small>
-                    </td>
-                    <td>
-                        <div class="btn-group-vertical btn-group-sm" role="group">
-                            <button class="btn btn-info-gradient btn-gradient btn-sm" onclick="viewCategory(${category.id})" title="View">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-warning-gradient btn-gradient btn-sm" onclick="editCategory(${category.id})" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn ${category.isActive ? 'btn-danger-gradient' : 'btn-success-gradient'} btn-gradient btn-sm"
-                                    onclick="toggleCategoryStatus(${category.id})"
-                                    title="${category.isActive ? 'Disable' : 'Enable'}">
-                                <i class="fas ${category.isActive ? 'fa-ban' : 'fa-check'}"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-    }
-
-    function openCreateModal() {
-        isEditMode = false;
-        editingCategoryId = null;
-        editingAttachmentId = null;
-
-        document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus me-2"></i>Add New Category';
-        document.getElementById('categoryForm').reset();
-        document.getElementById('imagePreview').style.display = 'none';
-        document.getElementById('fileUploadArea').style.display = 'block';
-        document.getElementById('categoryImage').required = true;
-
-        loadParentOptions();
-        new bootstrap.Modal(document.getElementById('categoryModal')).show();
-    }
-
-    async function editCategory(categoryId) {
-        showLoading(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
-            if (!response.ok) throw new Error('Failed to load category');
-
-            const category = await response.json();
-
-            isEditMode = true;
-            editingCategoryId = categoryId;
-            editingAttachmentId = category.id; // Assuming attachment ID is same as category ID based on your structure
-
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit me-2"></i>Edit Category';
-            document.getElementById('categoryName').value = category.name;
-            document.getElementById('parentCategory').value = category.parentId || '';
-            document.getElementById('categoryImage').required = false;
-
-            // Show current image
-            if (category.attachmentUrl) {
-                document.getElementById('previewImg').src = category.attachmentUrl;
-                document.getElementById('imagePreview').style.display = 'block';
-                document.getElementById('fileUploadArea').style.display = 'none';
-            }
-
-            loadParentOptions(categoryId);
-            new bootstrap.Modal(document.getElementById('categoryModal')).show();
-
-        } catch (error) {
-            showError('Failed to load category: ' + error.message);
-        } finally {
-            showLoading(false);
-        }
-    }
-
-    async function viewCategory(categoryId) {
-        showLoading(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/category/${categoryId}`);
-            if (!response.ok) throw new Error('Failed to load category');
-
-            const category = await response.json();
-
-            document.getElementById('viewModalBody').innerHTML = `
-                    <div class="row">
-                        <div class="col-md-4 text-center">
-                            <img src="${category.attachmentUrl}" alt="${category.name}" class="img-fluid rounded shadow">
-                        </div>
-                        <div class="col-md-8">
-                            <table class="table table-borderless">
-                                <tr><th>Name:</th><td>${category.name}</td></tr>
-                                <tr><th>ID:</th><td>${category.id}</td></tr>
-                                <tr><th>Parent:</th><td>${category.parentName || 'Root Category'}</td></tr>
-                                <tr><th>Status:</th><td><span class="status-badge ${category.isActive ? 'status-active' : 'status-inactive'}">${category.isActive ? 'Active' : 'Inactive'}</span></td></tr>
-                                <tr><th>Children:</th><td>${category.childrenNames && category.childrenNames.length > 0 ? category.childrenNames.join(', ') : 'No children'}</td></tr>
-                                <tr><th>Created:</th><td>${new Date(category.createdAt).toLocaleString()}</td></tr>
-                                <tr><th>Created By:</th><td>${category.createdBy || 'System'}</td></tr>
-                                <tr><th>Updated:</th><td>${new Date(category.updatedAt).toLocaleString()}</td></tr>
-                                <tr><th>Updated By:</th><td>${category.updatedBy || 'System'}</td></tr>
-                            </table>
-                        </div>
-                    </div>
-                `;
-
-            new bootstrap.Modal(document.getElementById('viewModal')).show();
-
-        } catch (error) {
-            showError('Failed to load category: ' + error.message);
-        } finally {
-            showLoading(false);
-        }
-    }
-
-    function loadParentOptions(excludeId = null) {
+    // Populate parent dropdown
+    function populateParentDropdown(excludeId = null) {
         const select = document.getElementById('parentCategory');
         select.innerHTML = '<option value="">No Parent (Root Category)</option>';
 
         categories
-            .filter(cat => cat.id !== excludeId)
+            .filter(category => category.id !== excludeId)
             .forEach(category => {
-                select.innerHTML += `<option value="${category.id}">${category.name}</option>`;
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                select.appendChild(option);
             });
     }
 
-    function filterCategories() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = categories.filter(category =>
-            category.name.toLowerCase().includes(searchTerm) ||
-            (category.parentName && category.parentName.toLowerCase().includes(searchTerm))
-        );
-        renderCategories(filtered);
-    }
-
-    // Utility Functions
+    // Utility functions
     function showLoading(show) {
-        document.querySelector('.loading-spinner').style.display = show ? 'block' : 'none';
+        document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
     }
 
-    function showSuccess(message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: message,
-            confirmButtonColor: '#667eea'
-        });
+    function setSaveButtonLoading(loading) {
+        const button = document.getElementById('saveButton');
+        const spinner = document.getElementById('saveSpinner');
+
+        if (loading) {
+            button.disabled = true;
+            spinner.classList.remove('d-none');
+        } else {
+            button.disabled = false;
+            spinner.classList.add('d-none');
+        }
     }
 
-    function showError(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: message,
-            confirmButtonColor: '#ff6b6b'
+    function showAlert(message, type) {
+        const alertContainer = document.getElementById('alertContainer');
+        const alertId = 'alert-' + Date.now();
+
+        const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert" id="${alertId}">
+                    <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+
+        alertContainer.insertAdjacentHTML('beforeend', alertHtml);
+
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            const alert = document.getElementById(alertId);
+            if (alert) {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            }
+        }, 5000);
+    }
+
+    function showValidationError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const feedback = field.nextElementSibling;
+
+        field.classList.add('is-invalid');
+        if (feedback && feedback.classList.contains('invalid-feedback')) {
+            feedback.textContent = message;
+        }
+    }
+
+    function clearValidationErrors() {
+        document.querySelectorAll('.is-invalid').forEach(field => {
+            field.classList.remove('is-invalid');
         });
     }
 </script>

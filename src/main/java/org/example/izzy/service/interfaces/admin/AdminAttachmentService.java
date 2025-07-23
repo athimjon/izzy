@@ -2,10 +2,12 @@ package org.example.izzy.service.interfaces.admin;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface AdminAttachmentService {
-    Long saveAttachment(MultipartFile file);
+import java.util.UUID;
 
-    void updateAttachment(Long attachmentId, MultipartFile file);
+public interface AdminAttachmentService {
+    UUID saveAttachment(MultipartFile file);
+
+    void updateAttachment(UUID attachmentId, MultipartFile file);
 
 //    void getFile(Long attachmentId, HttpServletResponse response);
 }

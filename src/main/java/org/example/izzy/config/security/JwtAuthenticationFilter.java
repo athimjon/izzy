@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
+                if ("izzy-token".equals(cookie.getName())) {
                     jwt = cookie.getValue();
                     break;
                 }

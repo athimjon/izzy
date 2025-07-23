@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.example.izzy.model.base.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,15 +20,16 @@ import java.util.List;
 @NoArgsConstructor
 public class ColourVariant extends BaseEntity {
 
-    @Column( nullable = false)
-    private String colour;
+    @Column(nullable = false)
+    private String colourName;
 
     @ManyToOne
     Product product;
 
-    @OneToMany
-    List<Attachment> images;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "colour_variant_id")
+    List<Attachment> images = new ArrayList<>();
 
-    @OneToMany
-    List<SizeVariant> sizeVariants;
+    @OneToMany(mappedBy = "colourVariant", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<SizeVariant> sizeVariants = new ArrayList<>();
 }

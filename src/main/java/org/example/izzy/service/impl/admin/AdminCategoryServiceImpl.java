@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
     @Transactional
     @Override
-    public AdminCategoryRes updateCategory(Long categoryId, AdminCategoryReq categoryReq) {
+    public AdminCategoryRes updateCategory(UUID categoryId, AdminCategoryReq categoryReq) {
 
         Category category = getCategoryFromDB(categoryId);
 
@@ -53,19 +54,19 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
 
     @Override
-    public String activateOrDeactivateCategory(Long categoryId) {
+    public String activateOrDeactivateCategory(UUID categoryId) {
         Category category = getCategoryFromDB(categoryId);
         category.setIsActive(!category.getIsActive());
         return categoryRepository.save(category).getIsActive() ? "ACTIVATED✅" : "DEACTIVATED⛔";
     }
 
     @Override
-    public AdminCategoryRes getOneCategory(Long categoryId) {
+    public AdminCategoryRes getOneCategory(UUID categoryId) {
         return categoryMapper.toAdminCategoryRes(getCategoryFromDB(categoryId));
     }
 
 
-    private Category getCategoryFromDB(Long categoryId) {
+    private Category getCategoryFromDB(UUID categoryId) {
         return categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException("Category Not found with ID: " + categoryId));
     }

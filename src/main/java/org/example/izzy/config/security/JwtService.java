@@ -16,6 +16,7 @@ import javax.crypto.SecretKey;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -67,7 +68,7 @@ public class JwtService {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        Long id = claims.get("id", Long.class);
+        UUID id = UUID.fromString(claims.get("id", String.class));
         Boolean isActive = claims.get("isActive", Boolean.class);
         String strRoles = (String) claims.get("roles");
 

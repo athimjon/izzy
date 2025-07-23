@@ -10,6 +10,8 @@ import org.example.izzy.service.interfaces.general.S3Service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
     private final AttachmentRepository attachmentRepository;
 
     @Override
-    public Long saveAttachment(MultipartFile file) {
+    public UUID saveAttachment(MultipartFile file) {
         String fileUrl = s3Service.uploadImage(file);
 
         Attachment attachment = Attachment.builder()
@@ -30,7 +32,7 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
     }
 
     @Override
-    public void updateAttachment(Long attachmentId, MultipartFile file) {
+    public void updateAttachment(UUID attachmentId, MultipartFile file) {
 
         Attachment existingAttachment = findAttachment(attachmentId);
 
@@ -51,7 +53,7 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
         }
     }
 
-    private Attachment findAttachment(Long attachmentId) {
+    private Attachment findAttachment(UUID attachmentId) {
         return attachmentRepository.findById(attachmentId).orElseThrow(() ->
                 new ResourceNotFoundException("Updating Attachment not found with ID :  " + attachmentId));
     }

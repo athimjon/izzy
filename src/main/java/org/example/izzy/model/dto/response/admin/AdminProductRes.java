@@ -1,30 +1,31 @@
 package org.example.izzy.model.dto.response.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.example.izzy.model.enums.Gender;
+import org.example.izzy.model.enums.ProductStatus;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
-public record AdminCategoryRes(
+public record AdminProductRes(
         UUID id,
         String name,
-
-        UUID parentId,
-        String parentName,
-
-        String attachmentUrl,
-
-        Set<UUID> childrenIds,
-        Set<String> childrenNames,
+        Integer price,
+        Integer discount,
+        String description,
+        Gender gender,
+        ProductStatus status,
+        String categoryName,
 
         Boolean isActive,
 
-        String createdBy,
-        String updatedBy,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+
+        String createdBy,
+        String updatedBy
+
 ) {
 }

@@ -18,6 +18,7 @@ public final class ApiConstant {
     public static final String ATTACHMENT = "/attachment";
 
     public static final String CATEGORY = "/category";
+    public static final String PRODUCT = "/product";
 
 
 }

@@ -7,6 +7,7 @@ import org.example.izzy.model.base.BaseEntity;
 import org.example.izzy.model.enums.Gender;
 import org.example.izzy.model.enums.ProductStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,11 +26,16 @@ public class Product extends BaseEntity {
 
     private Integer discount;
 
+
+
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
 
     @Builder.Default
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProductStatus status = ProductStatus.NEW;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -39,6 +45,6 @@ public class Product extends BaseEntity {
     @JoinColumn(nullable = false)
     private Category category;
 
-    @OneToMany
-    List<ColourVariant> colourVariants;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ColourVariant> colourVariants = new ArrayList<>();
 }

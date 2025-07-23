@@ -6,6 +6,7 @@ import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -15,7 +16,7 @@ public class CategoryMapperHelper {
 
 
     @Named("mapChildrenToChildrenIds")
-    public Set<Long> mapChildrenIds(Set<Category> children) {
+    public Set<UUID> mapChildrenIds(Set<Category> children) {
         if (children==null) return null;
         return children.stream()
                 .map(Category::getId)

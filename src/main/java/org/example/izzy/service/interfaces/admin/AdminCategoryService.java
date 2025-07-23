@@ -6,15 +6,16 @@ import org.example.izzy.model.dto.request.admin.AdminCategoryReq;
 import org.example.izzy.model.dto.response.admin.AdminCategoryRes;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AdminCategoryService {
     List<AdminCategoryRes> getAllCategories();
 
     AdminCategoryRes saveCategory(@Valid AdminCategoryReq categoryReq);
 
-    AdminCategoryRes updateCategory(@Positive Long categoryId, @Valid AdminCategoryReq categoryReq);
+    AdminCategoryRes updateCategory(UUID categoryId, @Valid AdminCategoryReq categoryReq);
 
-    String activateOrDeactivateCategory(Long categoryId);
+    String activateOrDeactivateCategory(UUID categoryId);
 
-    AdminCategoryRes getOneCategory(@Positive Long categoryId);
+    AdminCategoryRes getOneCategory( UUID categoryId);
 }

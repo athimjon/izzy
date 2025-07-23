@@ -1,7 +1,6 @@
 package org.example.izzy.controller.admin;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.model.dto.request.admin.AdminCategoryReq;
 import org.example.izzy.model.dto.response.admin.AdminCategoryRes;
@@ -12,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.example.izzy.constant.ApiConstant.*;
 
@@ -30,7 +30,7 @@ public class AdminCategoryController {
         return ResponseEntity.ok(categories);
     }
     @GetMapping("/{categoryId}")
-    public ResponseEntity<AdminCategoryRes> getOneCategory(@PathVariable @Positive Long categoryId) {
+    public ResponseEntity<AdminCategoryRes> getOneCategory(@PathVariable UUID categoryId) {
        AdminCategoryRes category = adminCategoryService.getOneCategory(categoryId);
         return ResponseEntity.ok(category);
     }
@@ -44,7 +44,7 @@ public class AdminCategoryController {
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<AdminCategoryRes> updateCategory(
-            @PathVariable @Positive Long categoryId,
+            @PathVariable  UUID categoryId,
             @Valid @RequestBody AdminCategoryReq categoryReq) {
         AdminCategoryRes adminCategoryRes = adminCategoryService.updateCategory(categoryId, categoryReq);
         return ResponseEntity.ok(adminCategoryRes);
@@ -52,7 +52,7 @@ public class AdminCategoryController {
 
 
     @PatchMapping("/{categoryId}")
-    public ResponseEntity<?> activateOrDeactivateCategory(@PathVariable @Positive Long categoryId) {
+    public ResponseEntity<?> activateOrDeactivateCategory(@PathVariable  UUID categoryId) {
         String message = adminCategoryService.activateOrDeactivateCategory(categoryId);
         return ResponseEntity.ok("Category " + message);
     }
