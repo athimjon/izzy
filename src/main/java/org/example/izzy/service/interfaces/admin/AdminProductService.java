@@ -7,11 +7,17 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AdminProductService {
-    List<AdminProductRes> getAllProducts();
 
-    AdminProductRes createProduct(AdminProductReq adminProductReq);
+    AdminProductRes createProductWithoutItsVariants(AdminProductReq adminProductReq);
 
-    AdminProductRes editProduct(UUID productId, AdminProductReq adminProductReq);
+    AdminProductRes getOneProductWithoutItsVariants(UUID productId);
 
-    String  disableOrEnableProduct(UUID productId);
+    List<AdminProductRes> getAllProductsWithoutVariants();
+
+
+
+    AdminProductRes updateProductWithoutVariants(UUID productId, AdminProductReq adminProductReq);
+
+    String disableOrEnableProduct(UUID productId);
+
 }

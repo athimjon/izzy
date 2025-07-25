@@ -16,8 +16,8 @@ public record AdminProductReq(
         @NotBlank(message = "Product Name is required !")
         String name,
 
-        @NotBlank(message = "Product Description is required !")
-        String description,
+        @NotNull(message = "Product Category must be selected!")
+        UUID categoryId,
 
         @NotNull(message = "Product Price is required !")
         Integer price,
@@ -33,10 +33,11 @@ public record AdminProductReq(
         @NotNull(message = "ProductStatus must be selected!")
         ProductStatus status,
 
-        @NotNull(message = "Product Category must be selected!")
-        UUID categoryId,
 
-        @Nullable
-        Boolean isActive
+        @NotNull(message = "Is Active field must not be null")
+        Boolean isActive,
+
+        @NotBlank(message = "Product Description is required !")
+        String description
 ) {
 }

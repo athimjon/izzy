@@ -12,10 +12,13 @@ public record AdminProductRes(
         String name,
         Integer price,
         Integer discount,
-        String description,
         Gender gender,
         ProductStatus status,
+        String description,
         String categoryName,
+        Integer stock,
+        Integer colours,
+        Integer sizes,
 
         Boolean isActive,
 

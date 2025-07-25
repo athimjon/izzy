@@ -1,6 +1,7 @@
 package org.example.izzy.mapper;
 
 import org.example.izzy.mapper.helper.GeneralMapperHelper;
+import org.example.izzy.mapper.helper.ProductMapperHelper;
 import org.example.izzy.model.dto.request.admin.AdminProductReq;
 import org.example.izzy.model.dto.response.admin.AdminProductRes;
 import org.example.izzy.model.entity.Product;
@@ -10,11 +11,13 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {GeneralMapperHelper.class})
+@Mapper(componentModel = "spring", uses = {GeneralMapperHelper.class, ProductMapperHelper.class})
 public interface ProductMapper {
 
     @Mapping(source = "category.name", target = "categoryName")
-//    @Mapping(source = "status", target = "status")
+    @Mapping(source = ".", target = "stock", qualifiedByName = "calculateStock")
+    @Mapping(source = ".", target = "colours", qualifiedByName = "countColourVariants")
+    @Mapping(source = ".", target = "sizes", qualifiedByName = "countSizeVariants")
     AdminProductRes toAdminProductRes(Product product);
 
     List<AdminProductRes> toAdminProductResList(List<Product> products);
@@ -31,5 +34,5 @@ public interface ProductMapper {
 
 
     @Mapping(source = "categoryId", target = "category", qualifiedByName = "mapCategoryIdToCategory")
-    void updateFromProductAdminProductReq(AdminProductReq adminProductReq, @MappingTarget Product productFromDB);
+    void updateProductFromAdminProductReq(AdminProductReq adminProductReq, @MappingTarget Product productFromDB);
 }

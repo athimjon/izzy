@@ -20,5 +20,7 @@ public final class ApiConstant {
     public static final String CATEGORY = "/category";
     public static final String PRODUCT = "/product";
 
+    public static final String COLOUR_VARIANT = "/colour-variant";
+
 
 }

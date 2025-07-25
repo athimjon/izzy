@@ -34,7 +34,7 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
     @Override
     public void updateAttachment(UUID attachmentId, MultipartFile file) {
 
-        Attachment existingAttachment = findAttachment(attachmentId);
+        Attachment existingAttachment = findAttachmentFromDB(attachmentId);
 
         // Yangi faylni S3 ga yuklash
         String fileUrl = s3Service.uploadImage(file);
@@ -53,7 +53,7 @@ public class AdminAttachmentServiceImpl implements AdminAttachmentService {
         }
     }
 
-    private Attachment findAttachment(UUID attachmentId) {
+    private Attachment findAttachmentFromDB(UUID attachmentId) {
         return attachmentRepository.findById(attachmentId).orElseThrow(() ->
                 new ResourceNotFoundException("Updating Attachment not found with ID :  " + attachmentId));
     }

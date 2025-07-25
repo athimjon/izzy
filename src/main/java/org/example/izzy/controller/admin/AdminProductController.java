@@ -22,25 +22,34 @@ import static org.example.izzy.constant.ApiConstant.*;
 public class AdminProductController {
     private final AdminProductService adminProductService;
 
-
-    @GetMapping
-    public ResponseEntity<List<AdminProductRes>> getAllProducts() {
-        List<AdminProductRes> productRes = adminProductService.getAllProducts();
-        return ResponseEntity.ok(productRes);
-    }
-
-
     @PostMapping
-    public ResponseEntity<AdminProductRes> createProduct(@Valid @RequestBody AdminProductReq adminProductReq) {
-        AdminProductRes adminProductRes = adminProductService.createProduct(adminProductReq);
+    public ResponseEntity<AdminProductRes> createProductWithoutItsVariants(@Valid @RequestBody AdminProductReq adminProductReq) {
+        AdminProductRes adminProductRes = adminProductService.createProductWithoutItsVariants(adminProductReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(adminProductRes);
     }
 
+    @GetMapping("/{productId}")
+    public ResponseEntity<AdminProductRes> getOneProductWithoutItsVariants(@PathVariable UUID productId) {
+        AdminProductRes productRes = adminProductService.getOneProductWithoutItsVariants(productId);
+        return ResponseEntity.ok(productRes);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AdminProductRes>> getAllProductsWithoutVariants() {
+        List<AdminProductRes> productRes = adminProductService.getAllProductsWithoutVariants();
+        return ResponseEntity.ok(productRes);
+    }
+
     @PutMapping("/{productId}")
-    public ResponseEntity<?> editProduct(@PathVariable UUID productId, @Valid @RequestBody AdminProductReq adminProductReq) {
-        AdminProductRes adminProductRes = adminProductService.editProduct(productId, adminProductReq);
+    public ResponseEntity<?> updateProductWithoutVariants(@PathVariable UUID productId, @Valid @RequestBody AdminProductReq adminProductReq) {
+        AdminProductRes adminProductRes = adminProductService.updateProductWithoutVariants(productId, adminProductReq);
         return ResponseEntity.ok(adminProductRes);
     }
+
+
+
+
+
 
     @PatchMapping("/{productId}")
     public ResponseEntity<?> disableOrEnableProduct(@PathVariable UUID productId) {

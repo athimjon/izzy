@@ -1,5 +1,6 @@
 package org.example.izzy.mapper;
 
+import org.example.izzy.mapper.helper.AttachmentMapperHelper;
 import org.example.izzy.mapper.helper.CategoryMapperHelper;
 import org.example.izzy.mapper.helper.GeneralMapperHelper;
 import org.example.izzy.model.dto.request.admin.AdminCategoryReq;
@@ -11,10 +12,11 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {CategoryMapperHelper.class, GeneralMapperHelper.class})
+@Mapper(componentModel = "spring", uses = {CategoryMapperHelper.class, GeneralMapperHelper.class, AttachmentMapperHelper.class})
 public interface CategoryMapper {
 
     @Mapping(source = "attachment.fileUrl", target = "attachmentUrl")
+    @Mapping(source = "attachment.id", target = "attachmentId")
     @Mapping(source = "parent.id", target = "parentId")
     @Mapping(source = "parent.name", target = "parentName")
     @Mapping(source = "children", target = "childrenIds", qualifiedByName = "mapChildrenToChildrenIds")
