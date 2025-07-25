@@ -1,6 +1,7 @@
 package org.example.izzy.model.dto.request.admin;
 
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public record AdminColourVariantReq(
+public record AdminEntireColourVariantReq(
         @NotBlank(message = "Colour Name is required!")
         String colourName,
 
@@ -19,7 +20,10 @@ public record AdminColourVariantReq(
         Boolean isActive,
 
         @NotEmpty(message = "At least one Image ID must be provided")
-        List<@NotNull(message = "Image ID must not be null") UUID> imageIds
+        List<@NotNull(message = "Image ID must not be null") UUID> imageIds,
+
+        @NotEmpty(message = "At least one SizeVariant must be provided")
+        List<@Valid AdminSizeVariantReq> sizeVariants
 
 ) {
 }

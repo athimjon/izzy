@@ -2,8 +2,9 @@ package org.example.izzy.controller.admin;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.izzy.model.dto.request.admin.AdminColourVariantReq;
+import org.example.izzy.model.dto.request.admin.AdminEntireColourVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminColourVariantRes;
+import org.example.izzy.model.dto.response.admin.AdminEntireColourVariantRes;
 import org.example.izzy.service.interfaces.admin.AdminColourVariantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,14 @@ public class AdminColourVariantController {
     private final AdminColourVariantService adminColourVariantService;
 
     @PostMapping
-    public ResponseEntity<AdminColourVariantRes> createColourVariant(@Valid @RequestBody AdminColourVariantReq colourVariantReq) {
-        AdminColourVariantRes adminColourVariantRes = adminColourVariantService.createColourVariant(colourVariantReq);
+    public ResponseEntity<AdminEntireColourVariantRes> createEntireColourVariant(@Valid @RequestBody AdminEntireColourVariantReq colourVariantReq) {
+        AdminEntireColourVariantRes adminColourVariantRes = adminColourVariantService.createEntireColourVariant(colourVariantReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(adminColourVariantRes);
     }
+
+
+
+
 
     @GetMapping("/{productId}")
     public ResponseEntity<List<AdminColourVariantRes>> getColourVariantByProductId(@PathVariable UUID productId) {
@@ -40,7 +45,7 @@ public class AdminColourVariantController {
     }
 
     @PutMapping("/{colourVariantId}")
-    public ResponseEntity<AdminColourVariantRes> updateColourVariant(@PathVariable UUID colourVariantId,AdminColourVariantReq colourVariantReq) {
+    public ResponseEntity<AdminColourVariantRes> updateColourVariant(@PathVariable UUID colourVariantId, AdminEntireColourVariantReq colourVariantReq) {
         AdminColourVariantRes colourVariantRes = adminColourVariantService.updateColourVariant(colourVariantId,colourVariantReq);
         return ResponseEntity.ok(colourVariantRes);
     }

@@ -1,5 +1,8 @@
 package org.example.izzy.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Size {
     // Russian Sizes
     RU_40("40"), RU_42("42"), RU_44("44"), RU_46("46"), RU_48("48"),
@@ -21,8 +24,18 @@ public enum Size {
     Size(String value) {
         this.value = value;
     }
-
+    @JsonValue
     public String getValue() {
         return value;
+    }
+
+    @JsonCreator
+    public static Size fromValue(String value) {
+        for (Size size : Size.values()) {
+            if (size.getValue().equalsIgnoreCase(value)) {
+                return size;
+            }
+        }
+        throw new IllegalArgumentException("Unknown Size: " + value);
     }
 }
