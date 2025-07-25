@@ -1,6 +1,5 @@
 package org.example.izzy.repo;
 
-import org.example.izzy.model.dto.response.admin.AdminColourVariantRes;
 import org.example.izzy.model.entity.ColourVariant;
 import org.springframework.data.jpa.repository.JpaRepository;
 

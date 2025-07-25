@@ -3,6 +3,7 @@ package org.example.izzy.controller.admin;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.model.dto.request.admin.AdminProductReq;
+import org.example.izzy.model.dto.response.admin.AdminEntireProductRes;
 import org.example.izzy.model.dto.response.admin.AdminProductRes;
 import org.example.izzy.service.interfaces.admin.AdminProductService;
 import org.springframework.http.HttpStatus;
@@ -47,13 +48,19 @@ public class AdminProductController {
     }
 
 
-
-
-
-
     @PatchMapping("/{productId}")
     public ResponseEntity<?> disableOrEnableProduct(@PathVariable UUID productId) {
         String message = adminProductService.disableOrEnableProduct(productId);
         return ResponseEntity.ok(message);
     }
+
+
+
+    @GetMapping("/{productId}" + ENTIRE)
+    public ResponseEntity<AdminEntireProductRes> getEntireProductWithVariants(@PathVariable UUID productId) {
+        AdminEntireProductRes productRes = adminProductService.getEntireProductWithVariants(productId);
+        return ResponseEntity.ok(productRes);
+    }
+
+
 }

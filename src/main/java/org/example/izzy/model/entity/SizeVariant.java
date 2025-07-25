@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.example.izzy.model.base.BaseEntity;
+import org.example.izzy.model.converter.SizeConverter;
 import org.example.izzy.model.enums.Size;
 
 @Entity
@@ -19,8 +20,8 @@ import org.example.izzy.model.enums.Size;
 public class SizeVariant extends BaseEntity {
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    Size size;
+    @Convert(converter = SizeConverter.class)
+    private Size size;
 
     @Column(nullable = false)
     private Integer quantity;

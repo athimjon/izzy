@@ -1,6 +1,7 @@
 package org.example.izzy.service.interfaces.admin;
 
 import org.example.izzy.model.dto.request.admin.AdminProductReq;
+import org.example.izzy.model.dto.response.admin.AdminEntireProductRes;
 import org.example.izzy.model.dto.response.admin.AdminProductRes;
 
 import java.util.List;
@@ -14,10 +15,10 @@ public interface AdminProductService {
 
     List<AdminProductRes> getAllProductsWithoutVariants();
 
-
-
     AdminProductRes updateProductWithoutVariants(UUID productId, AdminProductReq adminProductReq);
 
     String disableOrEnableProduct(UUID productId);
 
+
+    AdminEntireProductRes getEntireProductWithVariants(UUID productId);
 }

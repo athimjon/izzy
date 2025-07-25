@@ -56,4 +56,10 @@ public class AttachmentMapperHelper {
                 .toList();
     }
 
+
+    @Named("countAttachments")
+    public Integer countAttachments(List<Attachment> images) {
+        return images != null ? images.size() : 0;
+    }
+
 }

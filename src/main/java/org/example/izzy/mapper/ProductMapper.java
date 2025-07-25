@@ -3,6 +3,7 @@ package org.example.izzy.mapper;
 import org.example.izzy.mapper.helper.GeneralMapperHelper;
 import org.example.izzy.mapper.helper.ProductMapperHelper;
 import org.example.izzy.model.dto.request.admin.AdminProductReq;
+import org.example.izzy.model.dto.response.admin.AdminEntireProductRes;
 import org.example.izzy.model.dto.response.admin.AdminProductRes;
 import org.example.izzy.model.entity.Product;
 import org.mapstruct.Mapper;
@@ -11,7 +12,10 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {GeneralMapperHelper.class, ProductMapperHelper.class})
+@Mapper(componentModel = "spring", uses = {
+        GeneralMapperHelper.class,
+        ProductMapperHelper.class,
+        ColourVariantMapper.class})
 public interface ProductMapper {
 
     @Mapping(source = "category.name", target = "categoryName")
@@ -35,4 +39,14 @@ public interface ProductMapper {
 
     @Mapping(source = "categoryId", target = "category", qualifiedByName = "mapCategoryIdToCategory")
     void updateProductFromAdminProductReq(AdminProductReq adminProductReq, @MappingTarget Product productFromDB);
+
+//ENTIRE RES
+
+    @Mapping(source = "category.name", target = "categoryName")
+    @Mapping(source = ".", target = "colours", qualifiedByName = "countColourVariants")
+    @Mapping(source = "colourVariants", target = "colourVariants")
+    AdminEntireProductRes toAdminEntireProductRes(Product productFromDB);
+
+
+
 }

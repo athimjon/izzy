@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.izzy.exception.ResourceNotFoundException;
 import org.example.izzy.mapper.ProductMapper;
 import org.example.izzy.model.dto.request.admin.AdminProductReq;
+import org.example.izzy.model.dto.response.admin.AdminEntireProductRes;
 import org.example.izzy.model.dto.response.admin.AdminProductRes;
 import org.example.izzy.model.entity.Product;
 import org.example.izzy.repo.ProductRepository;
@@ -42,8 +43,6 @@ AdminProductServiceImpl implements AdminProductService {
     }
 
 
-
-
     @Override
     @Transactional
     public AdminProductRes updateProductWithoutVariants(UUID productId, AdminProductReq adminProductReq) {
@@ -59,6 +58,12 @@ AdminProductServiceImpl implements AdminProductService {
         Boolean isActive = productFromDB.getIsActive();
         productFromDB.setIsActive(!isActive);
         return "Product " + (productFromDB.getIsActive() ? "ACTIVATED✅" : "DEACTIVATED🚫");
+    }
+
+    @Override
+    public AdminEntireProductRes getEntireProductWithVariants(UUID productId) {
+        Product productFromDB = findProductFromDB(productId);
+        return productMapper.toAdminEntireProductRes(productFromDB);
     }
 
 
