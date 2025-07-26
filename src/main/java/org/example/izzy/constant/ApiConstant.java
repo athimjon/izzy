@@ -18,10 +18,15 @@ public final class ApiConstant {
     public static final String ATTACHMENT = "/attachment";
 
     public static final String CATEGORY = "/category";
+
     public static final String PRODUCT = "/product";
     public static final String ENTIRE = "/entire";
 
     public static final String COLOUR_VARIANT = "/colour-variant";
+    public static final String BY_PRODUCT = "/by-product";
+
+    public static final String SIZE_VARIANT = "/size-variant";
+
 
 
 }

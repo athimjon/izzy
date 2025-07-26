@@ -36,6 +36,6 @@ public enum Size {
                 return size;
             }
         }
-        throw new IllegalArgumentException("Unknown Size: " + value);
+        throw new IllegalArgumentException("JsonCreator Unknown Size: " + value);
     }
 }

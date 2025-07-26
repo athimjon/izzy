@@ -2,6 +2,7 @@ package org.example.izzy.controller.admin;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.izzy.model.dto.request.admin.AdminColourVariantWithNoSizesReq;
 import org.example.izzy.model.dto.request.admin.AdminEntireColourVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminColourVariantRes;
 import org.example.izzy.model.dto.response.admin.AdminEntireColourVariantRes;
@@ -28,26 +29,37 @@ public class AdminColourVariantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(adminColourVariantRes);
     }
 
-
-
-
-
-    @GetMapping("/{productId}")
-    public ResponseEntity<List<AdminColourVariantRes>> getColourVariantByProductId(@PathVariable UUID productId) {
-        List<AdminColourVariantRes> colourVariantRes = adminColourVariantService.getColourVariantsByProductId(productId);
+    @GetMapping(BY_PRODUCT + "/{productId}")
+    public ResponseEntity<List<AdminEntireColourVariantRes>> getEntireColourVariantsByProductId(@PathVariable UUID productId) {
+        List<AdminEntireColourVariantRes> colourVariantRes = adminColourVariantService.getEntireColourVariantsByProductId(productId);
         return ResponseEntity.ok(colourVariantRes);
     }
 
-    @DeleteMapping("/{colourVariantId}")
-    public ResponseEntity<Void> deleteColourVariantWithSizes(@PathVariable UUID colourVariantId) {
-        adminColourVariantService.deleteColourVariantWithSizes(colourVariantId);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{colourVariantId}")
+    public ResponseEntity<AdminEntireColourVariantRes> getOneEntireColourVariant(@PathVariable UUID colourVariantId) {
+        AdminEntireColourVariantRes colourVariantRes = adminColourVariantService.getOneEntireColourVariant(colourVariantId);
+        return ResponseEntity.ok(colourVariantRes);
     }
 
     @PutMapping("/{colourVariantId}")
-    public ResponseEntity<AdminColourVariantRes> updateColourVariant(@PathVariable UUID colourVariantId, AdminEntireColourVariantReq colourVariantReq) {
-        AdminColourVariantRes colourVariantRes = adminColourVariantService.updateColourVariant(colourVariantId,colourVariantReq);
+    public ResponseEntity<AdminColourVariantRes> updateColourVariant(@PathVariable UUID colourVariantId, @Valid @RequestBody AdminColourVariantWithNoSizesReq colourVariantReq) {
+        AdminColourVariantRes colourVariantRes = adminColourVariantService.updateColourVariant(colourVariantId, colourVariantReq);
         return ResponseEntity.ok(colourVariantRes);
     }
+
+
+    @PatchMapping("/{colourVariantId}")
+    public ResponseEntity<String> activateOrDeactivateColourVariant(@PathVariable UUID colourVariantId) {
+        String message = adminColourVariantService.activateOrDeactivateColourVariant(colourVariantId);
+        return ResponseEntity.ok("ColourVariant  " + message);
+    }
+
+//TEMPORARILY  DISABLED DELETING ENDPOINT
+//    @DeleteMapping("/{colourVariantId}")
+//    public ResponseEntity<Void> deleteColourVariantWithSizes(@PathVariable UUID colourVariantId) {
+//        adminColourVariantService.deleteColourVariantWithSizes(colourVariantId);
+//        return ResponseEntity.noContent().build();
+//    }
+
 
 }

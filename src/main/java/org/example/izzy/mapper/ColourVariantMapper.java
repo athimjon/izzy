@@ -3,6 +3,7 @@ package org.example.izzy.mapper;
 import org.example.izzy.mapper.helper.AttachmentMapperHelper;
 import org.example.izzy.mapper.helper.ColourVariantMapperHelper;
 import org.example.izzy.mapper.helper.GeneralMapperHelper;
+import org.example.izzy.model.dto.request.admin.AdminColourVariantWithNoSizesReq;
 import org.example.izzy.model.dto.request.admin.AdminEntireColourVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminColourVariantRes;
 import org.example.izzy.model.dto.response.admin.AdminEntireColourVariantRes;
@@ -38,7 +39,7 @@ public interface ColourVariantMapper {
 
     @Mapping(source = "imageIds", target = "images", qualifiedByName = "mapAttachmentIdsToAttachments")
     @Mapping(source = "productId", target = "product", qualifiedByName = "mapProductIdToProduct")
-    void updateColourVariantFromColourVariantReq(AdminEntireColourVariantReq colourVariantReq, @MappingTarget ColourVariant colourVariant);
+    void updateColourVariantFromColourVariantReq(AdminColourVariantWithNoSizesReq colourVariantReq, @MappingTarget ColourVariant colourVariant);
 
 
     //    ENTIRE RESPONSES

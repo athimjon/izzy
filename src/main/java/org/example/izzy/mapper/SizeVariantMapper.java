@@ -4,7 +4,8 @@ import org.example.izzy.model.dto.request.admin.AdminSizeVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminSizeVariantRes;
 import org.example.izzy.model.entity.SizeVariant;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -17,9 +18,11 @@ public interface SizeVariantMapper {
     List<SizeVariant> toEntityList(List<AdminSizeVariantReq> sizeVariantReqs);
 
 
-
+    @Mapping(source = "colourVariant.id", target = "colourVariantId")
     AdminSizeVariantRes toAdminSizeVariantRes(SizeVariant sizeVariant);
 
     List<AdminSizeVariantRes> toAdminSizeVariantResList(List<SizeVariant> sizeVariants);
 
+
+    void updateSizeVariantFromSizeVariantReq(@MappingTarget SizeVariant sizeVariantFromDB, AdminSizeVariantReq sizeVariantReq);
 }

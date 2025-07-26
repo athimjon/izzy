@@ -7,6 +7,7 @@ import java.util.UUID;
 public record AdminSizeVariantRes(
         UUID id,
         Size size,
-        Integer quantity
+        Integer quantity,
+        UUID colourVariantId
 ) {
 }
